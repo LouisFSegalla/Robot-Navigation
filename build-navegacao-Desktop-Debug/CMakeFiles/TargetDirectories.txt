@@ -1,0 +1,4 @@
+/home/luis/Documentos/2020_1/Integrador II/codigosNavegacao/build-navegacao-Desktop-Debug/CMakeFiles/rebuild_cache.dir
+/home/luis/Documentos/2020_1/Integrador II/codigosNavegacao/build-navegacao-Desktop-Debug/CMakeFiles/navegacao.dir
+/home/luis/Documentos/2020_1/Integrador II/codigosNavegacao/build-navegacao-Desktop-Debug/CMakeFiles/edit_cache.dir
+/home/luis/Documentos/2020_1/Integrador II/codigosNavegacao/build-navegacao-Desktop-Debug/CMakeFiles/navegacao_autogen.dir

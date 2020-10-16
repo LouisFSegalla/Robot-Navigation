@@ -1,0 +1,1 @@
+/usr/bin/g++  -g   CMakeFiles/navegacao.dir/main.cpp.o CMakeFiles/navegacao.dir/mainwindow.cpp.o CMakeFiles/navegacao.dir/navegacao_autogen/mocs_compilation.cpp.o  -o navegacao /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.9.5 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.9.5 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.9.5 
