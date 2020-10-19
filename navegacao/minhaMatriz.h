@@ -16,7 +16,7 @@ public:
     minhaMatriz(int a, int b);
     ~minhaMatriz();
     void resize(int a, int b, T fillElem);
-    void insereElemento(T elem, int a, int b);
+    int insereElemento(T elem, int a, int b);
     T retornaElemento(int a, int b);
     void imprime();
 };
@@ -75,15 +75,17 @@ void minhaMatriz<T>::resize(int a, int b, T fillElem)
 }
 
 template<typename T>
-void minhaMatriz<T>::insereElemento(T elem, int a, int b)
+int minhaMatriz<T>::insereElemento(T elem, int a, int b)
 {
     if(a < x && b < y)
     {
         matriz[a + b*y] = elem;
+        return 1;
     }
     else
     {
         std::cout << "Valores fora dos limites da matriz." << std::endl;
+        return 0;
     }
 }
 
@@ -96,9 +98,9 @@ T minhaMatriz<T>::retornaElemento(int a, int b)
 template<typename T>
 void minhaMatriz<T>::imprime()
 {
-    for(int i = 0; i < x; i++)
+    for(int j = 0; j < y; j++)
     {
-        for(int j = 0; j < y; j++)
+        for(int i = 0; i < x; i++)
         {
             std::cout << retornaElemento(i,j) << " ";
         }

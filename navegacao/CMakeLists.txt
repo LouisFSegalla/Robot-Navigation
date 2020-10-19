@@ -32,6 +32,8 @@ if(ANDROID)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    navegar.cpp
+    navegar.h
   )
 else()
   add_executable(navegacao
@@ -39,6 +41,7 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    navegar.cpp
   )
 endif()
 
