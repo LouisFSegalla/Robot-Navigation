@@ -1,0 +1,34 @@
+void Navegar::Busca_F(){
+    /*int *caminhos = new int(4);
+    verifica_lados(caminhos);
+    while(chegou_objetivo == false){
+
+        se o tamanho caminhos = 1
+            Coloca lista visitados
+            anda
+            veriica_lados
+
+        se o tamanho de caminhos > 1
+            atualiza a posicao da entrada da bifurcaco
+            coloca na fila de bifurcados
+            variavel controle bifurcação para true
+            movimenta
+            coloca na fila
+
+
+        se o tamanhos de caminhos = 0
+            volta até chegar na posicao da ultima bifurcacao(while pos_atula!=pos_bifurcacao)
+            se verifica_lados na bifucacao é validos
+                caminha
+            se nao
+                tirar da lista de bifucacao
+                e volta para linha 166
+            se lista bifurcacao está vazia
+                 variavel controle bifurcação para false
+
+        se chegou no objetivo
+            esvazia a lista de visitados
+            para a acao
+
+    }
+*/}
