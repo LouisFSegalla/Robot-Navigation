@@ -3,18 +3,25 @@
 //
 
 #include "Navegar.h"
+#include <list>
+#include <tuple>
+#include <stdio.h>
+#include <iostream>
 /*
  * Funções construtora e destrutura
  * */
+using namespace std;
 Navegar::~Navegar(){}
 Navegar::Navegar(minhaMatriz<char> *labirinto, unsigned int x, unsigned int y){
     sala = labirinto;
-    pos_inicial_x = x;
-    pos_inicial_y = y;
+ //   pos_inicial_x = x;
+ //   pos_inicial_y = y;
     pos_atual_x = x;
     pos_atual_y = y;
-
-    caminha(pos_inicial_x,pos_inicial_y);
+    pos_atual = make_tuple(x,y);
+    bifurcacao = false;
+    chegou_objetivo = false;
+    caminha(pos_atual);
 }
 
 /*
@@ -88,28 +95,28 @@ bool Navegar::verifica_atras(){
  *  retornar os caminhos possíveis
  *  OBS: tem que rever ta estranho esse retorno e tentar colocar como variável da classe
  * */
-int Navegar::verifica_lados() {
-    int contador = 0;
+std::list<int> Navegar::verifica_lados(){
+    std::list<int> caminhos;
     if(verifica_frente()){
-        caminhos[0] = 1;
-        contador++;
+        caminhos.push_back(1);
+
     }
 
     if(verifica_direita()){
-        caminhos[1] = 2;
-        contador++;
+        caminhos.push_back(2);
+
     }
 
     if (verifica_esquerda()) {
-        caminhos[2] = 3;
-        contador++;
+        caminhos.push_back(3);
+
     }
 
     if (verifica_atras()){
-        caminhos[3] = 4;
-        contador++;
+        caminhos.push_back(4);
+
     }
-    return contador;
+    return caminhos;
 
 }
 
@@ -125,8 +132,10 @@ bool Navegar::se_objetivo(unsigned int x, unsigned int y){
 //Entrada: objeto do tipo minhaMatriz que representa o mapa
 //         e as coordenadas da posição inicial do robô
 //Saída: Nenhuma
-void Navegar::caminha(unsigned int x, unsigned int y)
+void Navegar::caminha(tuple<int,int> t )
 {
+    int x = get<0>(t);
+    int y = get<1>(t);
     if(se_objetivo(x,y) == true){
         chegou_objetivo = true;
     }
@@ -136,45 +145,107 @@ void Navegar::caminha(unsigned int x, unsigned int y)
     if(pos_atual_x != x|| pos_atual_y != y ){
         sala->insereElemento('x',pos_atual_x,pos_atual_y);
     }
-    pos_atual_x = x;
-    pos_atual_y = y;
+   // pos_atual_x = x;
+    //pos_atual_y = y;
+    pos_atual = t;
     sala->imprime();
 
 
 }
+
+tuple<int,int> Navegar::Posicao_andar(int lado)
+{
+    tuple<int,int> posicao;
+    //frente
+    if(lado == 1){
+        posicao = make_tuple(pos_atual_x, pos_atual_y-1);
+    }
+    //direita
+    if(lado == 2){
+        posicao = make_tuple(pos_atual_x+1, pos_atual_y);
+    }
+    //esquerda
+    if(lado == 3){
+        posicao = make_tuple(pos_atual_x-1, pos_atual_y-1);
+    }
+    //atras
+    if(lado == 4){
+        posicao = make_tuple(pos_atual_x, pos_atual_y+1);
+    }
+    return posicao;
+}
 //versao simplificada, labirintos complexos ele vai se perder se fizermos isso
 //vamos testar essa e depois ajeitamos para labirintos complexos
 void Navegar::Busca_F(){
-    /*int *caminhos = new int(4);
-    verifica_lados(caminhos);
+    tuple<int, int> posicao;
+     std::list<int> caminhos;
     while(chegou_objetivo == false){
+        caminhos = verifica_lados();
 
-        se o tamanho caminhos = 1
-            Coloca lista visitados
-            anda
-            veriica_lados
+        //se chegou no objetivo
+        if (chegou_objetivo == true){
+          //  esvazia a lista de visitados
+          for(int i =0; i<visitados.size(); i++){
+              visitados.pop_front();
+          }
+            //    para a acao
+            return;
 
-        se o tamanho de caminhos > 1
-            atualiza a posicao da entrada da bifurcaco
-            coloca na fila de bifurcados
-            variavel controle bifurcação para true
-            movimenta
-            coloca na fila
+        }
+       // se o tamanho caminhos = 1
+       if(caminhos.size() == 1){
+           //Coloca a proxima posição lista visitados
+            posicao = Posicao_andar(caminhos.front());
+            visitados.push_back(posicao);
+           //     anda para  proxima posição
+           caminha(posicao);
+
+           //      veriica_lados
+       }
 
 
-        se o tamanhos de caminhos = 0
-            volta até chegar na posicao da ultima bifurcacao(while pos_atula!=pos_bifurcacao)
-            se verifica_lados na bifucacao é validos
-                caminha
-            se nao
-                tirar da lista de bifucacao
-                e volta para linha 166
-            se lista bifurcacao está vazia
-                 variavel controle bifurcação para false
+       // se o tamanho de caminhos > 1
+       if(caminhos.size() > 1){
+           //     atualiza a posicao da entrada da bifurcaco
+           //     coloca na fila de bifurcados
+           lista_bifurcacao.push_back(pos_atual);
+           //     muda variavel controle bifurcação para true
+           bifurcacao = true;
+           posicao = Posicao_andar(caminhos.front());
+            visitados.push_back(posicao);
+           //     anda para  proxima posição
+           caminha(posicao);
 
-        se chegou no objetivo
-            esvazia a lista de visitados
-            para a acao
+       }
 
+
+
+       // se o tamanhos de caminhos = 0
+       if(caminhos.size() == 0){
+           while(pos_atual != lista_bifurcacao.back()){
+               //percorre a lista de visitados até chegar na bifurcacao
+               caminha(visitados.back());
+               // se Posicao  do  robo  ==  posic̃ao  da  ultimabifurcac̃ao
+               if(pos_atual == lista_bifurcacao.back()){
+                   list<int> aux = verifica_lados();
+                   if(aux.size()> 0){
+                       //     anda para  proxima posição
+                       posicao = Posicao_andar(caminhos.front());
+                       visitados.push_back(posicao);
+
+                       caminha(posicao);
+                   }
+                   else{
+                       lista_bifurcacao.pop_back();//remove da fila
+                   }
+                   if(lista_bifurcacao.empty()) bifurcacao = false;
+               }
+
+           }
+
+       }
+       // limpa a lista para ser realocada e não perder memoria
+       //caminhos.clear();
     }
-*/}
+
+}

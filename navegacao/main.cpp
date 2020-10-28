@@ -46,12 +46,10 @@ int main(int argc, char *argv[])
 
     std::string nome = "/home/thais/CLionProjects/navegacao/mapa.txt";
    // std::cout << nome << std::endl;
-    iniciaMapa(&m,nome);
+   // iniciaMapa(&m,nome);
     std::cout << "\n\n";
     Navegar robo(&m,0,8);
-    std::cout<<  robo.verifica_lados()<< std::endl;
 
-   // robo.caminha(0,8);
-   // return a.exec();
+
 }
 
