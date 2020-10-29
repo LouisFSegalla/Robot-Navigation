@@ -1,10 +1,11 @@
 //#include "mainwindow.h"
+//#include <QApplication>
 
-#include "minhaMatriz.h" //biblioteca criada para auxiliar na manipulação das matrizes
 #include <fstream>
 #include <string>
 #include "Navegar.h"
-//#include <QApplication>
+#include "minhaMatriz.h" //biblioteca criada para auxiliar na manipulação das matrizes
+
 
 //Função Inicializa o laberinto que o robô precisa percorrer
 //Entrada: objeto do tipo minhaMatriz que representará o mapa e o nome do arquivo contendo o mapa
@@ -22,6 +23,7 @@ void iniciaMapa(minhaMatriz<T> *m, std::string nome)
     int yAux = 0;
 
     arq >> xAux >> yAux;//Pego o tamanho da matriz
+    std::cout << "xAux = " << xAux << "\nyAux = " << yAux << std::endl;
     m->resize(xAux,yAux,'a');//Redimensiono o ponteiro para o tamanho do mapa
     T aux;
     for(int j = 0; j < yAux; j++)
@@ -32,24 +34,31 @@ void iniciaMapa(minhaMatriz<T> *m, std::string nome)
             m->insereElemento(aux,i,j);
         }
     }
-    m->imprime();
 }
 
-
-int main(int argc, char *argv[])
+int main()
 {
-    //QApplication a(argc, argv);
     minhaMatriz<char> m;
 
     //MainWindow w;
     //w.show();
 
-    std::string nome = "/home/thais/CLionProjects/navegacao/mapa.txt";
-   // std::cout << nome << std::endl;
-   // iniciaMapa(&m,nome);
-    std::cout << "\n\n";
-    Navegar robo(&m,0,8);
+    std::string nome = "/home/luis/Documentos/2020_1/Integrador II/codigosNavegacao/navegacaoRobo/mapa.txt";
+    //std::cout << nome << std::endl;
+    iniciaMapa(&m,nome);
 
+    Navegar robo(&m,0,0);
+    std::cout << "\n\nChamando a função de busca!\n\n";
+    robo.Busca_F();
+
+    std::list< std::vector<int> > l;
+    l = robo.retornaVisitados();
+
+    std::vector<int> aux;
+    for(std::list< std::vector<int> >::iterator itList = l.begin(); itList != l.end(); itList++)
+    {
+        aux = *itList;
+        std::cout << aux[0] << " " << aux[1] << std::endl;
+    }
 
 }
-

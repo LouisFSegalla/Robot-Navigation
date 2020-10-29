@@ -1,11 +1,11 @@
 10 10
-a a a a a a a a a a
-a o o a o o a o o a
-a o o a o o a o o a
-a o o a o o a o o a 
-a o o a o o a o o a
-a o o a o o a o o a
-a o o a o o a o o a
-a o o a o o a o o a
-a o o a o o a o o a
-a o o a o o a o o a
+a 0 0 0 0 0 0 0 0 0
+a 0 0 0 0 0 0 0 0 0
+a a a a a a a a 0 0
+0 0 0 a 0 a 0 a 0 0
+0 0 0 a 0 a 0 a 0 0
+0 0 0 a 0 a 0 a 0 0
+0 a a a a a 0 a a a
+0 0 0 0 a 0 a a 0 a
+0 0 0 0 a 0 0 0 0 a
+0 0 0 0 F a a a a a
